@@ -12,8 +12,9 @@ namespace brain_fxxk_core.test.Execute
         [TestInitialize]
         public void Init()
         {
-            var config = new BFCommandConfig();
-            this._executer = new Executer(config);
+            var config = new CommonConfig();
+            var commandConfig = new BFCommandConfig();
+            this._executer = new Executer(config, commandConfig);
         }
 
         [TestMethod]
@@ -166,7 +167,7 @@ namespace brain_fxxk_core.test.Execute
     {
         public string Text { get; set; }
 
-        public Executer(BFCommandConfig config) : base(config)
+        public Executer(CommonConfig config, BFCommandConfig commandConfig) : base(config, commandConfig)
         {
         }
 
