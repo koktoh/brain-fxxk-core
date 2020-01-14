@@ -73,6 +73,17 @@ namespace brain_fxxk_core.test.Execute
         }
 
         [TestMethod]
+        public void ExecuteWithInLineCommentInsideCommandsTest()
+        {
+            // Hello World!
+            var src = @"+++++++++[>++++++++>+++++++++++>+++<<<-]>.#+;>++.#-;+++++++.#>;.#<;+++.#[;>+++++.#];<<<+++++[>+++<-]>.##;>.#<<<+++++[>+++<-]>.;+++.------.--------.>+.";
+
+            this._executer.Execute(src);
+
+            this._executer.Text.Is("Hello World!");
+        }
+
+        [TestMethod]
         public void ExecuteMultiLineWithTrailingCommentTest()
         {
             // Hello World!
@@ -94,6 +105,7 @@ namespace brain_fxxk_core.test.Execute
 
             this._executer.Text.Is("Hello World!");
         }
+
         [TestMethod]
         public void ExecuteWithCommentRowTest()
         {
@@ -107,6 +119,37 @@ namespace brain_fxxk_core.test.Execute
 +++.
 >+++++.
 <<<+++++[>+++<-]>.
+>.
++++.
+------.
+--------.
+>+.";
+
+            this._executer.Execute(src);
+
+            this._executer.Text.Is("Hello World!");
+        }
+
+        [TestMethod]
+        public void ExecuteWithCommentRowInsideCommandsTest()
+        {
+            // Hello World!
+            var src =
+@"#+
++++++++++[>++++++++>+++++++++++>+++<<<-]>.
+#-
+>++.
+#>
++++++++.
+#<
+.
+#[
++++.
+#]
+>+++++.
+##
+<<<+++++[>+++<-]>.
+#<<<+++++[>+++<-]>.
 >.
 +++.
 ------.

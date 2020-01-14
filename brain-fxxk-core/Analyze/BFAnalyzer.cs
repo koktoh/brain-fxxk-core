@@ -35,6 +35,26 @@ namespace BFCore.Analyze
             return this.AnalyzeCode(code);
         }
 
+        private bool TryGetNextTargetCommand(string code, BFCommand targetCommand, out int index)
+        {
+            index = 0;
+
+            for (int i = 0; i < code.Length;)
+            {
+                var c = code[i].ToString();
+
+                if (targetCommand.Command.StartsWith(c) && targetCommand.Length <= code.Length - i && targetCommand.Command.Equals(code.Substring(i, targetCommand.Length)))
+                {
+                    index = i;
+                    return true;
+                }
+
+                i++;
+            }
+
+            return false;
+        }
+
         private bool TryGetNextCommand(string code, out BFCommand command, out int length)
         {
             length = 0;
@@ -72,9 +92,9 @@ namespace BFCore.Analyze
                 return false;
             }
 
-            if (this.TryGetNextCommand(code.Skip(startIndex).Join(), out var command, out var length) && command.IsEndComment())
+            if (this.TryGetNextTargetCommand(code.Skip(startIndex).Join(), this._config.EndComment, out var index))
             {
-                result = code.Substring(startIndex, length);
+                result = code.Substring(startIndex, index);
                 return true;
             }
 
@@ -136,7 +156,7 @@ namespace BFCore.Analyze
                     .Where(x => x.Length <= line.Length - i)
                     .FirstOrDefault(x => line.Substring(i, x.Length).Equals(x.Command));
 
-                if (command.IsDefinedCommand())
+                if (!previousCommand.IsBeginComment() && command.IsDefinedCommand())
                 {
                     yield return this.ReturnCommand(command, ref i, out previousCommand);
                     continue;

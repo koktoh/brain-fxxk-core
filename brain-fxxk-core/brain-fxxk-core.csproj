@@ -11,6 +11,7 @@
     <PackageTags>brain-fuck;brain-fxxk;interpreter</PackageTags>
     <Copyright>Copyright (c) 2019 koktoh</Copyright>
     <RepositoryType>git</RepositoryType>
+    <Version>1.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
