@@ -20,14 +20,24 @@ namespace BFCore.Execute
             this._analyzer = new BFAnalyzer(config);
         }
 
+        private void Init()
+        {
+            this._index = 0;
+            this._memory = new int[this._memory.Length];
+        }
+
         public void Execute(Stream stream)
         {
+            this.Init();
+
             var commands = this._analyzer.Analyze(stream);
             this.ExecuteCommands(commands);
         }
 
         public void Execute(string code)
         {
+            this.Init();
+
             var commands = this._analyzer.Analyze(code);
             this.ExecuteCommands(commands);
         }
