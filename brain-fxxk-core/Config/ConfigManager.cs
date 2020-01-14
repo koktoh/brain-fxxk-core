@@ -15,6 +15,11 @@ namespace BFCore.Config
             return ConfigSerializer.Deserialize<T>(file.OpenRead());
         }
 
+        public static T Import<T>(Stream stream)
+        {
+            return ConfigSerializer.Deserialize<T>(stream);
+        }
+
         public static void Save<T>(T source, string path)
         {
             var fi = new FileInfo(path);
@@ -23,10 +28,15 @@ namespace BFCore.Config
 
         public static void Save<T>(T source, FileInfo file)
         {
+            Save(source, file.OpenWrite());
+        }
+
+        public static void Save<T>(T source, Stream stream)
+        {
             var config = ConfigSerializer.Serialize(source);
             var formatted = ConfigSerializer.Format(config);
 
-            using var sw = file.CreateText();
+            using var sw = new StreamWriter(stream);
             sw.WriteLine(formatted);
         }
     }
