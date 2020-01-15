@@ -5,13 +5,14 @@
     <RootNamespace>BFCore</RootNamespace>
     <AssemblyName>BFCore</AssemblyName>
     <Authors>koktoh</Authors>
+    <Description>Brain Fxxk Interpreter for .Net Core</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/koktoh/brain-fxxk-core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/koktoh/brain-fxxk-core</RepositoryUrl>
     <PackageTags>brain-fuck;brain-fxxk;interpreter</PackageTags>
-    <Copyright>Copyright (c) 2019 koktoh</Copyright>
+    <Copyright>Copyright (c) 2020 koktoh</Copyright>
     <RepositoryType>git</RepositoryType>
-    <Version>1.0.1</Version>
+    <Version>1.1.0</Version>
   </PropertyGroup>
 
   <ItemGroup>

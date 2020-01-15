@@ -83,7 +83,7 @@ namespace BFCore.Analyze
             return false;
         }
 
-        private bool CheckComment(BFCommand previousCommand, int startIndex, string code, out string result)
+        private bool TryGetComment(BFCommand previousCommand, int startIndex, string code, out string result)
         {
             result = string.Empty;
 
@@ -102,7 +102,7 @@ namespace BFCore.Analyze
             return true;
         }
 
-        private bool CheckTrivia(BFCommand previousCommand, int startIndex, string code, out string result)
+        private bool TryGetTrivia(BFCommand previousCommand, int startIndex, string code, out string result)
         {
             const string pattern = @"^\s+$";
 
@@ -162,13 +162,13 @@ namespace BFCore.Analyze
                     continue;
                 }
 
-                if (this.CheckTrivia(previousCommand, i, line, out var result))
+                if (this.TryGetTrivia(previousCommand, i, line, out var result))
                 {
                     var trivia = new BFCommand(result, BFCommandType.Trivia);
                     yield return this.ReturnCommand(trivia, ref i, out previousCommand);
                     continue;
                 }
-                else if (this.CheckComment(previousCommand, i, line, out result))
+                else if (this.TryGetComment(previousCommand, i, line, out result))
                 {
                     var comment = new BFCommand(result, BFCommandType.Trivia);
                     yield return this.ReturnCommand(comment, ref i, out previousCommand);

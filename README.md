@@ -46,6 +46,28 @@ This is **abstract** class. You should implemnt some methods.
 
 ## Configuration
 
+### Common configuration
+
+This configurate memory size. Default is `2048`.
+You can use default config just instantiate `CommonConfig` class.
+
+You can set value by JSON file.
+(Also instatiating `CommonConfig` with properties.)
+
+Like this:
+
+```json
+{
+  "MemorySize": 2048
+}
+```
+
+Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<CommonConfig>(path)` or `ConfigManager.Import<CommonConfig>(FileInfo)` or `ConfigManager.Import<CommonConfig>(Stream)`.
+Also you can save configs in JSON format using `ConfigManager.Save<T>(source, path)` and so on.
+
+
+### Command configuration
+
 You can configurate command tokens by JSON file.
 
 Default command tokens are here. 
@@ -61,9 +83,10 @@ Default command tokens are here.
 |#|Begin comment. Ignore following sentences until `;` or new line.|
 |;|End comment.|
 
-`BFCommandConfig` class is implemented these default configs. You can use these configs just instantiate `BFCommandConfig` class.
+`BFCommandConfig` class is implemented these default tokens. You can use these tokens just instantiate `BFCommandConfig` class.
 
-If you want to use custom command tokens, you CAN by JSON. 
+If you want to use custom command tokens, you CAN by JSON.
+(Also instatiating `BFCommandConfig` with properties.)
 
 Like this:
 
@@ -112,5 +135,5 @@ Like this:
 }
 ```
 
-Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<BFCommandConfig>(path)` or `ConfigManager.Import<BFCommandConfig>(FileInfo)`.
-Also you can save configs in JSON format.
+Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<BFCommandConfig>(path)` or `ConfigManager.Import<BFCommandConfig>(FileInfo)` or `ConfigManager.Import<BFCommandConfig>(Stream)`.
+Also you can save configs in JSON format using `ConfigManager.Save<T>(source, path)` and so on.

@@ -10,24 +10,36 @@ namespace BFCore.Execute
 {
     public abstract class ExecuterBase
     {
+        private readonly CommonConfig _config;
         private readonly BFAnalyzer _analyzer;
 
-        protected int _index = 0;
-        protected int[] _memory = new int[2024];
+        protected int _index;
+        protected int[] _memory;
 
-        protected ExecuterBase(BFCommandConfig config)
+        protected ExecuterBase(CommonConfig config, BFCommandConfig commandConfig)
         {
-            this._analyzer = new BFAnalyzer(config);
+            this._config = config;
+            this._analyzer = new BFAnalyzer(commandConfig);
+        }
+
+        private void Init()
+        {
+            this._index = 0;
+            this._memory = new int[this._config.MemorySize];
         }
 
         public void Execute(Stream stream)
         {
+            this.Init();
+
             var commands = this._analyzer.Analyze(stream);
             this.ExecuteCommands(commands);
         }
 
         public void Execute(string code)
         {
+            this.Init();
+
             var commands = this._analyzer.Analyze(code);
             this.ExecuteCommands(commands);
         }
