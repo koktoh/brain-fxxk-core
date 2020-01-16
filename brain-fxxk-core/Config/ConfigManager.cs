@@ -30,8 +30,10 @@ namespace BFCore.Config
             var config = ConfigSerializer.Serialize(source);
             var formatted = ConfigSerializer.Format(config);
 
-            using var sw = new StreamWriter(stream);
-            sw.WriteLine(formatted);
+            using (var sw = new StreamWriter(stream))
+            {
+                sw.WriteLine(formatted);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using BFCore.Command;
+﻿using System.Collections.Generic;
+using BFCore.Command;
 
 namespace BFCore.Config
 {
@@ -14,5 +15,19 @@ namespace BFCore.Config
         public BFCommand Write { get; set; } = new BFCommand(".", BFCommandType.Write);
         public BFCommand BeginComment { get; set; } = new BFCommand("#", BFCommandType.BeginComment);
         public BFCommand EndComment { get; set; } = new BFCommand(";", BFCommandType.EndComment);
+
+        public IEnumerable<BFCommand> GetCommands()
+        {
+            yield return this.Increment;
+            yield return this.Decrement;
+            yield return this.MoveRight;
+            yield return this.MoveLeft;
+            yield return this.RoopHead;
+            yield return this.RoopTale;
+            yield return this.Read;
+            yield return this.Write;
+            yield return this.BeginComment;
+            yield return this.EndComment;
+        }
     }
 }

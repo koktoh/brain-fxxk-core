@@ -27,7 +27,7 @@ namespace BFCore.Extesion
 
         public static IEnumerable<string> SplitNewLine(this string source, StringSplitOptions options = StringSplitOptions.None)
         {
-            return source.Split(Environment.NewLine, options);
+            return source.Split(new[] { Environment.NewLine }, options);
         }
     }
 }
