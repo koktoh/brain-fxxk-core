@@ -27,10 +27,14 @@ var code =
 --------.                                  # d
 >+.                                        # !"
 
-// Use default config
-var config = new BFCommandConfig();
+// Use default common config
+var commonConfig = new CommonConfig();
+
+// Use default command config
+var commandConfig = new BFCommandConfig();
+
 // Instantiate some concrete Executer class
-var executer = new Executer(config);
+var executer = new Executer(commonConfig, commandConfig);
 
 executer.execute(code);
 
