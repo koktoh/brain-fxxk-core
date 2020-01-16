@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Utf8Json;
+using Newtonsoft.Json;
 
 namespace BFCore.Config
 {
@@ -7,22 +7,25 @@ namespace BFCore.Config
     {
         internal static string Serialize<T>(T source)
         {
-            return JsonSerializer.ToJsonString(source);
+            return JsonConvert.SerializeObject(source);
         }
 
         internal static T Deserialize<T>(string json)
         {
-            return JsonSerializer.Deserialize<T>(json);
+            return JsonConvert.DeserializeObject<T>(json);
         }
 
         internal static T Deserialize<T>(Stream stream)
         {
-            return JsonSerializer.Deserialize<T>(stream);
+            using (var sr = new StreamReader(stream))
+            {
+                return JsonConvert.DeserializeObject<T>(sr.ReadToEnd());
+            }
         }
 
         internal static string Format(string source)
         {
-            return JsonSerializer.PrettyPrint(source);
+            return JsonConvert.SerializeObject(JsonConvert.DeserializeObject(source), Formatting.Indented);
         }
     }
 }
