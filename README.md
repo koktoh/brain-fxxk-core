@@ -1,6 +1,6 @@
 # Brain Fxxk Core
 
-Brain Fxxk Interpreter of .Net Core class library.
+Brain Fxxk Interpreter of .Net Standard class library.
 
 You can configurate ALL COMMAND TOKENS by JSON.
 
@@ -66,7 +66,7 @@ Like this:
 }
 ```
 
-Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<CommonConfig>(path)` or `ConfigManager.Import<CommonConfig>(FileInfo)` or `ConfigManager.Import<CommonConfig>(Stream)`.
+Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<CommonConfig>(path)` or `ConfigManager.Import<CommonConfig>(Stream)`.
 Also you can save configs in JSON format using `ConfigManager.Save<T>(source, path)` and so on.
 
 
@@ -139,5 +139,5 @@ Like this:
 }
 ```
 
-Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<BFCommandConfig>(path)` or `ConfigManager.Import<BFCommandConfig>(FileInfo)` or `ConfigManager.Import<BFCommandConfig>(Stream)`.
+Save this JSON file somewhere you like. And, import this file using `ConfigManager.Import<BFCommandConfig>(path)` or `ConfigManager.Import<BFCommandConfig>(Stream)`.
 Also you can save configs in JSON format using `ConfigManager.Save<T>(source, path)` and so on.
