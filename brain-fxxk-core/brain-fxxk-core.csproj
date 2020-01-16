@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>netstandard1.3</TargetFramework>
     <RootNamespace>BFCore</RootNamespace>
     <AssemblyName>BFCore</AssemblyName>
     <Authors>koktoh</Authors>
-    <Description>Brain Fxxk Interpreter for .Net Core</Description>
+    <Description>Brain Fxxk Interpreter based on .Net Standard</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/koktoh/brain-fxxk-core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/koktoh/brain-fxxk-core</RepositoryUrl>
     <PackageTags>brain-fuck;brain-fxxk;interpreter</PackageTags>
     <Copyright>Copyright (c) 2020 koktoh</Copyright>
     <RepositoryType>git</RepositoryType>
-    <Version>1.1.0</Version>
+    <Version>2.0.0</Version>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Utf8Json" Version="1.3.7" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
   </ItemGroup>
 
 </Project>

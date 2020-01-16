@@ -17,17 +17,15 @@ namespace BFCore.Analyze
         {
             this._config = config;
 
-            this._definedCommands = config
-                .GetType()
-                .GetProperties()
-                .Select(x => (BFCommand)x.GetValue(this._config))
-                .ToList();
+            this._definedCommands = config.GetCommands().ToList();
         }
 
         public IEnumerable<BFCommand> Analyze(Stream stream)
         {
-            using var sr = new StreamReader(stream);
-            return this.Analyze(sr.ReadToEnd());
+            using (var sr = new StreamReader(stream))
+            {
+                return this.Analyze(sr.ReadToEnd());
+            }
         }
 
         public IEnumerable<BFCommand> Analyze(string code)
