@@ -6,13 +6,10 @@ namespace BFCore.Config
     {
         public static T Import<T>(string path)
         {
-            var fi = new FileInfo(path);
-            return Import<T>(fi);
-        }
-
-        public static T Import<T>(FileInfo file)
-        {
-            return ConfigSerializer.Deserialize<T>(file.OpenRead());
+            using (var fs = new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read))
+            {
+                return Import<T>(fs);
+            }
         }
 
         public static T Import<T>(Stream stream)
@@ -22,13 +19,10 @@ namespace BFCore.Config
 
         public static void Save<T>(T source, string path)
         {
-            var fi = new FileInfo(path);
-            Save(source, fi);
-        }
-
-        public static void Save<T>(T source, FileInfo file)
-        {
-            Save(source, file.OpenWrite());
+            using (var fs = new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None))
+            {
+                Save(source, fs);
+            }
         }
 
         public static void Save<T>(T source, Stream stream)
