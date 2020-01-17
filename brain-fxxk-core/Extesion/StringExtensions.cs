@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using BFCore.Command;
 
 namespace BFCore.Extesion
 {
@@ -28,6 +29,11 @@ namespace BFCore.Extesion
         public static IEnumerable<string> SplitNewLine(this string source, StringSplitOptions options = StringSplitOptions.None)
         {
             return source.Split(new[] { Environment.NewLine }, options);
+        }
+
+        public static bool StartsWith(this string source, BFCommand command)
+        {
+            return source.StartsWith(command.Command);
         }
     }
 }
