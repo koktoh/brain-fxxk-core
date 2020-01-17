@@ -39,9 +39,7 @@ namespace BFCore.Analyze
 
             for (int i = 0; i < code.Length;)
             {
-                var c = code[i].ToString();
-
-                if (targetCommand.Command.StartsWith(c) && targetCommand.Length <= code.Length - i && targetCommand.Command.Equals(code.Substring(i, targetCommand.Length)))
+                if (code.Substring(i).StartsWith(targetCommand))
                 {
                     index = i;
                     return true;
@@ -53,30 +51,26 @@ namespace BFCore.Analyze
             return false;
         }
 
-        private bool TryGetNextCommand(string code, out BFCommand command, out int length)
+        private bool TryGetNextCommand(string code, out BFCommand command, out int index)
         {
-            length = 0;
-            command = new BFCommand();
+            index = 0;
+            command = default;
 
             for (int i = 0; i < code.Length;)
             {
-                var c = code[i].ToString();
-
                 command = this._definedCommands
-                    .Where(x => x.Command.StartsWith(c))
-                    .Where(x => x.Length <= code.Length - i)
-                    .FirstOrDefault(x => x.Command.Equals(code.Substring(i, x.Length)));
+                    .FirstOrDefault(x => code.Substring(i).StartsWith(x));
 
                 if (command.IsDefinedCommand())
                 {
-                    length = i;
+                    index = i;
                     return true;
                 }
 
                 i++;
             }
 
-            command = new BFCommand();
+            command = default;
 
             return false;
         }
@@ -90,13 +84,13 @@ namespace BFCore.Analyze
                 return false;
             }
 
-            if (this.TryGetNextTargetCommand(code.Skip(startIndex).Join(), this._config.EndComment, out var index))
+            if (this.TryGetNextTargetCommand(code.Substring(startIndex), this._config.EndComment, out var index))
             {
                 result = code.Substring(startIndex, index);
                 return true;
             }
 
-            result = code.Skip(startIndex).Join();
+            result = code.Substring(startIndex);
             return true;
         }
 
@@ -111,13 +105,13 @@ namespace BFCore.Analyze
                 return false;
             }
 
-            if (this.TryGetNextCommand(code.Skip(startIndex).Join(), out var command, out var length))
+            if (this.TryGetNextCommand(code.Substring(startIndex), out var command, out var index))
             {
-                result = code.Substring(startIndex, length);
+                result = code.Substring(startIndex, index);
             }
             else
             {
-                result = code.Skip(startIndex).Join();
+                result = code.Substring(startIndex);
             }
 
             if (!result.IsMatch(pattern))
@@ -147,12 +141,8 @@ namespace BFCore.Analyze
 
             for (int i = 0; i < line.Length;)
             {
-                var c = line[i].ToString();
-
                 var command = this._definedCommands
-                    .Where(x => x.Command.StartsWith(c))
-                    .Where(x => x.Length <= line.Length - i)
-                    .FirstOrDefault(x => line.Substring(i, x.Length).Equals(x.Command));
+                    .FirstOrDefault(x => line.Substring(i).StartsWith(x));
 
                 if (!previousCommand.IsBeginComment() && command.IsDefinedCommand())
                 {
