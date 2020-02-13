@@ -36,14 +36,14 @@ namespace BFCore.Extesion
             return command.CommandType.IsCommandTypeOf(BFCommandType.MoveLeft);
         }
 
-        public static bool IsRoopHead(this BFCommand command)
+        public static bool IsLoopHead(this BFCommand command)
         {
-            return command.CommandType.IsCommandTypeOf(BFCommandType.RoopHead);
+            return command.CommandType.IsCommandTypeOf(BFCommandType.LoopHead);
         }
 
-        public static bool IsRoopTale(this BFCommand command)
+        public static bool IsLoopTail(this BFCommand command)
         {
-            return command.CommandType.IsCommandTypeOf(BFCommandType.RoopTale);
+            return command.CommandType.IsCommandTypeOf(BFCommandType.LoopTail);
         }
 
         public static bool IsRead(this BFCommand command)
