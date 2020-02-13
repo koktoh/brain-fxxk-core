@@ -110,11 +110,6 @@ namespace BFCore.Execute
             var toFindCount = 1;
             for (; index >= 0; index--)
             {
-                if (toFindCount == 0)
-                {
-                    return true;
-                }
-
                 var command = commands[index];
 
                 if (command.IsLoopHead())
@@ -125,6 +120,11 @@ namespace BFCore.Execute
                 if (command.IsLoopTail())
                 {
                     toFindCount++;
+                }
+
+                if (toFindCount == 0)
+                {
+                    return true;
                 }
             }
 
@@ -143,11 +143,6 @@ namespace BFCore.Execute
             var toFindCount = 1;
             for (; index < commands.Count; index++)
             {
-                if (toFindCount == 0)
-                {
-                    return true;
-                }
-
                 var command = commands[index];
 
                 if (command.IsLoopHead())
@@ -158,6 +153,11 @@ namespace BFCore.Execute
                 if (command.IsLoopTail())
                 {
                     toFindCount--;
+                }
+
+                if (toFindCount == 0)
+                {
+                    return true;
                 }
             }
 
