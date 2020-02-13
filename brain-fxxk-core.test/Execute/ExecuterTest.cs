@@ -7,14 +7,14 @@ namespace brain_fxxk_core.test.Execute
     [TestClass]
     public class ExecuterTest
     {
-        private Executer _executer;
+        private TestExecuter _executer;
 
         [TestInitialize]
         public void Init()
         {
             var config = new CommonConfig();
             var commandConfig = new BFCommandConfig();
-            this._executer = new Executer(config, commandConfig);
+            this._executer = new TestExecuter(config, commandConfig);
         }
 
         [TestMethod]
@@ -161,23 +161,17 @@ namespace brain_fxxk_core.test.Execute
 
             this._executer.Text.Is("Hello World!");
         }
-    }
 
-    public class Executer : ExecuterBase
-    {
-        public string Text { get; set; }
-
-        public Executer(CommonConfig config, BFCommandConfig commandConfig) : base(config, commandConfig)
+        [TestMethod]
+        public void ExecuteNestedLoopTest()
         {
+            // @@
+            var src = @"++++[>++++[>++++<-]<-]>>..";
+
+            this._executer.Execute(src);
+
+            this._executer.Text.Is("@@");
         }
 
-        protected override void Read()
-        {
-        }
-
-        protected override void Write()
-        {
-            this.Text += (char)this._memory[this._index];
-        }
     }
 }

@@ -4,6 +4,7 @@ using System.Linq;
 using BFCore.Analyze;
 using BFCore.Command;
 using BFCore.Config;
+using BFCore.Exception;
 using BFCore.Extesion;
 
 namespace BFCore.Execute
@@ -69,24 +70,18 @@ namespace BFCore.Execute
                     case BFCommandType.LoopHead:
                         if (this._memory[this._index] == 0)
                         {
-                            while (i < executableCommands.Count())
+                            if (!this.TryGoToLoopTail(executableCommands, ref i))
                             {
-                                if (executableCommands[++i].IsLoopTail())
-                                {
-                                    break;
-                                }
+                                throw new BFSyntaxException("Does not have paired Loop Tail Command");
                             }
                         }
                         break;
                     case BFCommandType.LoopTail:
                         if (this._memory[this._index] != 0)
                         {
-                            while (i >= 0)
+                            if (!this.TryGoToLoopHead(executableCommands, ref i))
                             {
-                                if (executableCommands[--i].IsLoopHead())
-                                {
-                                    break;
-                                }
+                                throw new BFSyntaxException("Does not have paired Loop Head Command");
                             }
                         }
                         break;
@@ -101,6 +96,72 @@ namespace BFCore.Execute
                 }
 
             }
+        }
+
+        private bool TryGoToLoopHead(IList<BFCommand> commands, ref int index)
+        {
+            if (index <= 0)
+            {
+                return false;
+            }
+
+            index--;
+
+            var toFindCount = 1;
+            for (; index >= 0; index--)
+            {
+                if (toFindCount == 0)
+                {
+                    return true;
+                }
+
+                var command = commands[index];
+
+                if (command.IsLoopHead())
+                {
+                    toFindCount--;
+                }
+
+                if (command.IsLoopTail())
+                {
+                    toFindCount++;
+                }
+            }
+
+            return false;
+        }
+
+        private bool TryGoToLoopTail(IList<BFCommand> commands, ref int index)
+        {
+            if (index >= commands.Count)
+            {
+                return false;
+            }
+
+            index++;
+
+            var toFindCount = 1;
+            for (; index < commands.Count; index++)
+            {
+                if (toFindCount == 0)
+                {
+                    return true;
+                }
+
+                var command = commands[index];
+
+                if (command.IsLoopHead())
+                {
+                    toFindCount++;
+                }
+
+                if (command.IsLoopTail())
+                {
+                    toFindCount--;
+                }
+            }
+
+            return false;
         }
 
         protected abstract void Read();

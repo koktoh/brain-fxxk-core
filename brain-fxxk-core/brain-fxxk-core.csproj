@@ -1,18 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard1.3</TargetFramework>
     <RootNamespace>BFCore</RootNamespace>
     <AssemblyName>BFCore</AssemblyName>
     <Authors>koktoh</Authors>
-    <Description>Brain Fxxk Interpreter based on .Net Standard</Description>
+    <Description>Brainfxxk Interpreter based on .Net Standard</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageProjectUrl>https://github.com/koktoh/brain-fxxk-core</PackageProjectUrl>
     <RepositoryUrl>https://github.com/koktoh/brain-fxxk-core</RepositoryUrl>
-    <PackageTags>brain-fuck;brain-fxxk;interpreter</PackageTags>
+    <PackageTags>brainfuck;brainfxxk;interpreter</PackageTags>
     <Copyright>Copyright (c) 2020 koktoh</Copyright>
     <RepositoryType>git</RepositoryType>
-    <Version>2.1.1</Version>
+    <Version>2.1.2</Version>
   </PropertyGroup>
 
   <ItemGroup>

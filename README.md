@@ -1,6 +1,6 @@
-# Brain Fxxk Core
+# Brainfxxk Core
 
-Brain Fxxk Interpreter of .Net Standard class library.
+Brainfxxk Interpreter of .Net Standard class library.
 
 You can configurate ALL COMMAND TOKENS by JSON.
 
