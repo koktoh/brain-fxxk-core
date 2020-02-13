@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using BFCore.Extesion;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace BFCore.Command
 {
@@ -8,6 +10,7 @@ namespace BFCore.Command
         public string Command { get; }
         [IgnoreDataMember]
         public int Length => this.Command.HasValue() ? this.Command.Length : 0;
+        [JsonConverter(typeof(StringEnumConverter))]
         public BFCommandType CommandType { get; }
 
         public BFCommand(string command, BFCommandType commandType)

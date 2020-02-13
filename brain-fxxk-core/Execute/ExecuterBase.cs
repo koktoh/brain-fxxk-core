@@ -66,24 +66,24 @@ namespace BFCore.Execute
                     case BFCommandType.MoveLeft:
                         this._index--;
                         break;
-                    case BFCommandType.RoopHead:
+                    case BFCommandType.LoopHead:
                         if (this._memory[this._index] == 0)
                         {
                             while (i < executableCommands.Count())
                             {
-                                if (executableCommands[++i].IsRoopTale())
+                                if (executableCommands[++i].IsLoopTail())
                                 {
                                     break;
                                 }
                             }
                         }
                         break;
-                    case BFCommandType.RoopTale:
+                    case BFCommandType.LoopTail:
                         if (this._memory[this._index] != 0)
                         {
                             while (i >= 0)
                             {
-                                if (executableCommands[--i].IsRoopHead())
+                                if (executableCommands[--i].IsLoopHead())
                                 {
                                     break;
                                 }

@@ -112,13 +112,13 @@ Like this:
     "Command": "moveL",
     "CommandType": "MoveLeft"
   },
-  "RoopHead": {
-    "Command": "roopH",
-    "CommandType": "RoopHead"
+  "LoopHead": {
+    "Command": "loopH",
+    "CommandType": "LoopHead"
   },
-  "RoopTale": {
-    "Command": "roopT",
-    "CommandType": "RoopTale"
+  "LoopTail": {
+    "Command": "loopT",
+    "CommandType": "LoopTail"
   },
   "Read": {
     "Command": "read",
