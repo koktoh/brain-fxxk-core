@@ -1,0 +1,42 @@
+{
+  "Increment": {
+    "Command": "inc",
+    "CommandType": "Increment"
+  },
+  "Decrement": {
+    "Command": "dec",
+    "CommandType": "Decrement"
+  },
+  "MoveRight": {
+    "Command": "moveR",
+    "CommandType": "MoveRight"
+  },
+  "MoveLeft": {
+    "Command": "moveL",
+    "CommandType": "MoveLeft"
+  },
+  "LoopHead": {
+    "Command": "roopH",
+    "CommandType": "LoopHead"
+  },
+  "LoopTail": {
+    "Command": "roopT",
+    "CommandType": "LoopTail"
+  },
+  "Read": {
+    "Command": "read",
+    "CommandType": "Read"
+  },
+  "Write": {
+    "Command": "write",
+    "CommandType": "Write"
+  },
+  "BeginComment": {
+    "Command": "beginC",
+    "CommandType": "BeginComment"
+  },
+  "EndComment": {
+    "Command": "endC",
+    "CommandType": "EndComment"
+  }
+}

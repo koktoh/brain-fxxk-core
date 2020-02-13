@@ -16,8 +16,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -43,8 +43,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, true },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -70,8 +70,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, true },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -97,8 +97,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, true },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -118,14 +118,14 @@ namespace brain_fxxk_core.test.Extension
             });
         }
 
-        public static object[] roopHeadTestSource = new[]
+        public static object[] loopHeadTestSource = new[]
         {
             new object[] { _config.Increment, false },
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, true },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, true },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -135,24 +135,24 @@ namespace brain_fxxk_core.test.Extension
         };
 
         [TestMethod]
-        [TestCaseSource(nameof(roopHeadTestSource))]
-        public void IsRoopHeadTest()
+        [TestCaseSource(nameof(loopHeadTestSource))]
+        public void IsLoopHeadTest()
 
         {
             this.TestContext.Run<BFCommand, bool>((target, expected) =>
             {
-                target.IsRoopHead().Is(expected, $@"TestCase: ""{target}""");
+                target.IsLoopHead().Is(expected, $@"TestCase: ""{target}""");
             });
         }
 
-        public static object[] roopTaleTestSource = new[]
+        public static object[] loopTailTestSource = new[]
         {
             new object[] { _config.Increment, false },
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, true },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, true },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -162,13 +162,13 @@ namespace brain_fxxk_core.test.Extension
         };
 
         [TestMethod]
-        [TestCaseSource(nameof(roopTaleTestSource))]
-        public void IsRoopTaleTest()
+        [TestCaseSource(nameof(loopTailTestSource))]
+        public void IsLoopTailTest()
 
         {
             this.TestContext.Run<BFCommand, bool>((target, expected) =>
             {
-                target.IsRoopTale().Is(expected, $@"TestCase: ""{target}""");
+                target.IsLoopTail().Is(expected, $@"TestCase: ""{target}""");
             });
         }
 
@@ -178,8 +178,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, true },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -205,8 +205,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, true },
             new object[] { _config.BeginComment, false },
@@ -232,8 +232,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, true },
@@ -259,8 +259,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -286,8 +286,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -313,8 +313,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, false },
             new object[] { _config.MoveRight, false },
             new object[] { _config.MoveLeft, false },
-            new object[] { _config.RoopHead, false },
-            new object[] { _config.RoopTale, false },
+            new object[] { _config.LoopHead, false },
+            new object[] { _config.LoopTail, false },
             new object[] { _config.Read, false },
             new object[] { _config.Write, false },
             new object[] { _config.BeginComment, false },
@@ -340,8 +340,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, true },
             new object[] { _config.MoveRight, true },
             new object[] { _config.MoveLeft, true },
-            new object[] { _config.RoopHead, true },
-            new object[] { _config.RoopTale, true },
+            new object[] { _config.LoopHead, true },
+            new object[] { _config.LoopTail, true },
             new object[] { _config.Read, true },
             new object[] { _config.Write, true },
             new object[] { _config.BeginComment, false },
@@ -366,8 +366,8 @@ namespace brain_fxxk_core.test.Extension
             new object[] { _config.Decrement, true },
             new object[] { _config.MoveRight, true },
             new object[] { _config.MoveLeft, true },
-            new object[] { _config.RoopHead, true },
-            new object[] { _config.RoopTale, true },
+            new object[] { _config.LoopHead, true },
+            new object[] { _config.LoopTail, true },
             new object[] { _config.Read, true },
             new object[] { _config.Write, true },
             new object[] { _config.BeginComment, true },

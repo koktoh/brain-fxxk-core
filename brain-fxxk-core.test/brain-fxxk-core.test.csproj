@@ -22,4 +22,19 @@
     <ProjectReference Include="..\brain-fxxk-core\brain-fxxk-core.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="TestData\BFCommandConfigJsons\ExpectedObsolete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\BFCommandConfigJsons\Expected.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\BFCommandConfigJsons\Obsolete.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="TestData\BFCommandConfigJsons\Normal.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

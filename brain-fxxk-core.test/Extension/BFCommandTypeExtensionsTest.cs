@@ -12,8 +12,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -33,8 +33,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, true)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -54,8 +54,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, true)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -75,8 +75,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, true)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -96,19 +96,19 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, true)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, true)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
         [TestCase(BFCommandType.EndComment, false)]
         [TestCase(BFCommandType.Trivia, false)]
         [TestCase(BFCommandType.Undefined, false)]
-        public void RoopHeadJudgeCorrectlyTest()
+        public void LoopHeadJudgeCorrectlyTest()
         {
             this.TestContext.Run<BFCommandType, bool>((testCase, expected) =>
             {
-                BFCommandType.RoopHead.IsCommandTypeOf(testCase).Is(expected, $@"TestCase: ""{testCase}"" Expected: ""{expected}""");
+                BFCommandType.LoopHead.IsCommandTypeOf(testCase).Is(expected, $@"TestCase: ""{testCase}"" Expected: ""{expected}""");
             });
         }
 
@@ -117,19 +117,19 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, true)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, true)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
         [TestCase(BFCommandType.EndComment, false)]
         [TestCase(BFCommandType.Trivia, false)]
         [TestCase(BFCommandType.Undefined, false)]
-        public void RoopTaleJudgeCorrectlyTest()
+        public void LoopTailJudgeCorrectlyTest()
         {
             this.TestContext.Run<BFCommandType, bool>((testCase, expected) =>
             {
-                BFCommandType.RoopTale.IsCommandTypeOf(testCase).Is(expected, $@"TestCase: ""{testCase}"" Expected: ""{expected}""");
+                BFCommandType.LoopTail.IsCommandTypeOf(testCase).Is(expected, $@"TestCase: ""{testCase}"" Expected: ""{expected}""");
             });
         }
 
@@ -138,8 +138,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, true)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -159,8 +159,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, true)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -180,8 +180,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, true)]
@@ -201,8 +201,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -222,8 +222,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
@@ -243,8 +243,8 @@ namespace brain_fxxk_core.test.Extension
         [TestCase(BFCommandType.Decrement, false)]
         [TestCase(BFCommandType.MoveRight, false)]
         [TestCase(BFCommandType.MoveLeft, false)]
-        [TestCase(BFCommandType.RoopHead, false)]
-        [TestCase(BFCommandType.RoopTale, false)]
+        [TestCase(BFCommandType.LoopHead, false)]
+        [TestCase(BFCommandType.LoopTail, false)]
         [TestCase(BFCommandType.Read, false)]
         [TestCase(BFCommandType.Write, false)]
         [TestCase(BFCommandType.BeginComment, false)]
