@@ -20,7 +20,7 @@ namespace BFCore.Execute
         protected ExecuterBase(CommonConfig config, BFCommandConfig commandConfig)
         {
             this._config = config;
-            this._analyzer = new BFAnalyzer(commandConfig);
+            this._analyzer = new BFAnalyzer(config, commandConfig);
         }
 
         private void Init()
