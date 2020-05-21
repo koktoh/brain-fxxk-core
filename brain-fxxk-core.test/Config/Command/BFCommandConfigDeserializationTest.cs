@@ -2,7 +2,7 @@
 using BFCore.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace brain_fxxk_core.test.Config
+namespace brain_fxxk_core.test.Config.Command
 {
     [TestClass]
     public class BFCommandConfigDeserializationTest

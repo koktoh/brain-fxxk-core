@@ -2,10 +2,10 @@
 using BFCore.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace brain_fxxk_core.test.Config
+namespace brain_fxxk_core.test.Config.Common
 {
     [TestClass]
-    public class BFCommandConfigFixingObsoleteTest
+    public class CommonConfigSerializationTest
     {
         private readonly string _destPath = @"TestData\Result.json";
 
@@ -19,15 +19,17 @@ namespace brain_fxxk_core.test.Config
         }
 
         [TestMethod]
-        public void FixingObsoleteTest()
+        public void SerializeCorrectlyTest()
         {
-            var obsoleteJsonPath = @"TestData\BFCommandConfigJsons\Obsolete.json";
+            var src = new CommonConfig
+            {
+                MemorySize = 2000,
+                EnableCommentOut = false,
+            };
 
-            var expectedFile = @"TestData\BFCommandConfigJsons\ExpectedObsolete.json";
+            var expectedFile = @"TestData\CommonConfigJsons\Expected.json";
 
-            var obsoleteConfig = ConfigManager.Import<BFCommandConfig>(obsoleteJsonPath);
-
-            ConfigManager.Save(obsoleteConfig, this._destPath);
+            ConfigManager.Save(src, this._destPath);
 
             FileAssert.AreEqual(expectedFile, this._destPath);
         }
