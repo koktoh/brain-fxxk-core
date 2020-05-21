@@ -52,7 +52,15 @@ This is **abstract** class. You should implemnt some methods.
 
 ### Common configuration
 
-This configurate memory size. Default is `2048`.
+This configurate some common configurations.
+
+Configuration items and descriptions are here.
+
+|Name|Description|
+|:--|:--|
+|MemorySize|Configurate using memory size. Default is `2048`.|
+|EnableCommentOut|Configurate comment out commands are active or not. Default is `true`. If `true`, comment out commands are active. If `false`, comment out commands are inactive, and ignore any undefined characters. It means you can write codes like a traditional Brainfxxk.|
+
 You can use default config just instantiate `CommonConfig` class.
 
 You can set value by JSON file.
@@ -62,7 +70,8 @@ Like this:
 
 ```json
 {
-  "MemorySize": 2048
+  "MemorySize": 2048,
+  "EnableCommentOut": true
 }
 ```
 
