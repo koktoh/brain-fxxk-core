@@ -5,6 +5,7 @@ using BFCore.Command;
 using BFCore.Config;
 using BFCore.Exception;
 using BFCore.Extesion;
+using BFCore.Parse;
 
 namespace BFCore.Analyze
 {
@@ -12,12 +13,14 @@ namespace BFCore.Analyze
     {
         private readonly BFCommandConfig _config;
         private readonly IReadOnlyList<BFCommand> _definedCommands;
+        private readonly IParser _parser;
 
-        public BFAnalyzer(BFCommandConfig config)
+        public BFAnalyzer(CommonConfig commonConfig, BFCommandConfig commandConfig)
         {
-            this._config = config;
-
-            this._definedCommands = config.GetCommands().ToList();
+            this._config = commandConfig;
+            this._definedCommands = commandConfig.GetCommands().ToList();
+            var parserFactory = new ParserFactory(commandConfig);
+            this._parser = parserFactory.Create(commonConfig.EnableCommentOut);
         }
 
         public IEnumerable<BFCommand> Analyze(Stream stream)
@@ -33,167 +36,78 @@ namespace BFCore.Analyze
             return this.AnalyzeCode(code);
         }
 
-        private bool TryGetNextTargetCommand(string code, BFCommand targetCommand, out int index)
+        private BFCommand GetSurplusLoopCommand(IEnumerable<BFCommand> commands)
         {
-            index = 0;
-
-            for (int i = 0; i < code.Length;)
-            {
-                if (code.Substring(i).StartsWith(targetCommand))
+            return commands.Where(x => x.IsLoopHead() || x.IsLoopTail())
+                .Aggregate<BFCommand, IDictionary<BFCommand, BFCommand>, BFCommand>(
+                new Dictionary<BFCommand, BFCommand>(),
+                (acc, next) =>
                 {
-                    index = i;
-                    return true;
-                }
+                    if (next.IsBeginComment())
+                    {
+                        acc.Add(next, default);
+                        return acc;
+                    }
+                    else
+                    {
+                        var key = acc.LastOrDefault(x => x.Value.Equals(default)).Key;
+                        acc[key] = next;
 
-                i++;
-            }
+                        return acc;
+                    }
+                },
+                dict =>
+                {
+                    var result = dict.FirstOrDefault(x => x.Key.Equals(default) || x.Value.Equals(default));
 
-            return false;
+                    return result.Key.Equals(default) ? result.Value : result.Key;
+                });
         }
 
-        private bool TryGetNextCommand(string code, out BFCommand command, out int index)
+        private bool HasLoopCommandPair(IEnumerable<BFCommand> commands)
         {
-            index = 0;
-            command = default;
-
-            for (int i = 0; i < code.Length;)
-            {
-                command = this._definedCommands
-                    .FirstOrDefault(x => code.Substring(i).StartsWith(x));
-
-                if (command.IsDefinedCommand())
-                {
-                    index = i;
-                    return true;
-                }
-
-                i++;
-            }
-
-            command = default;
-
-            return false;
+            return commands.Where(x => x.IsLoopHead() || x.IsLoopTail())
+                .Count() % 2 == 0;
         }
 
-        private bool TryGetComment(BFCommand previousCommand, int startIndex, string code, out string result)
+        private IEnumerable<BFCommand> AggregateComment(IEnumerable<BFCommand> commands)
         {
-            result = string.Empty;
+            var inComment = false;
 
-            if (!previousCommand.IsBeginComment())
+            foreach(var commandsByLine in commands.GroupBy(x=>x.RowPos))
             {
-                return false;
-            }
+                BFCommand trivia;
 
-            if (this.TryGetNextTargetCommand(code.Substring(startIndex), this._config.EndComment, out var index))
-            {
-                result = code.Substring(startIndex, index);
-                return true;
-            }
-
-            result = code.Substring(startIndex);
-            return true;
-        }
-
-        private bool TryGetTrivia(BFCommand previousCommand, int startIndex, string code, out string result)
-        {
-            const string pattern = @"^\s+$";
-
-            result = string.Empty;
-
-            if (previousCommand.IsBeginComment())
-            {
-                return false;
-            }
-
-            if (this.TryGetNextCommand(code.Substring(startIndex), out var command, out var index))
-            {
-                result = code.Substring(startIndex, index);
-            }
-            else
-            {
-                result = code.Substring(startIndex);
-            }
-
-            if (!result.IsMatch(pattern))
-            {
-                var innerIndex = result
-                    .Select((x, i) => new { Index = i, Value = x })
-                    .SkipWhile(x => x.Value.IsMatch(pattern))
-                    .FirstOrDefault()
-                    .Index;
-
-                throw new BFSyntaxException(0, startIndex + innerIndex);
-            }
-
-            return true;
-        }
-
-        private BFCommand ReturnCommand(BFCommand command, ref int index, out BFCommand previousCommand)
-        {
-            index += command.Length;
-            previousCommand = command;
-            return command;
-        }
-
-        private IEnumerable<BFCommand> AnalyzeCodeByLine(string line)
-        {
-            var previousCommand = new BFCommand();
-
-            for (int i = 0; i < line.Length;)
-            {
-                var command = this._definedCommands
-                    .FirstOrDefault(x => line.Substring(i).StartsWith(x));
-
-                if (!previousCommand.IsBeginComment() && command.IsDefinedCommand())
+                foreach(var command in commandsByLine)
                 {
-                    yield return this.ReturnCommand(command, ref i, out previousCommand);
-                    continue;
-                }
+                    if(command.IsBeginComment())
+                    {
+                        inComment = true;
+                        yield return command;
+                        continue;
+                    }
 
-                if (this.TryGetTrivia(previousCommand, i, line, out var result))
-                {
-                    var trivia = new BFCommand(result, BFCommandType.Trivia);
-                    yield return this.ReturnCommand(trivia, ref i, out previousCommand);
-                    continue;
-                }
-                else if (this.TryGetComment(previousCommand, i, line, out result))
-                {
-                    var comment = new BFCommand(result, BFCommandType.Trivia);
-                    yield return this.ReturnCommand(comment, ref i, out previousCommand);
-                    continue;
-                }
-                else
-                {
-                    throw new BFSyntaxException(0, i);
+                    if(inComment)
+                    {
+                        trivia = new BFCommand(command, command.RowPos, command.Pos);
+                        continue;
+                    }
                 }
             }
         }
 
         private IEnumerable<BFCommand> AnalyzeCode(string code)
         {
-            var splitedCode = code.SplitNewLine();
+            var parsed = this._parser.Parse(code);
 
-            var analized = new List<BFCommand>();
-
-            for (int i = 0; i < splitedCode.Count(); i++)
+            if (!this.HasLoopCommandPair(parsed))
             {
-                var line = splitedCode.ElementAt(i);
+                var surplusLoopCommand = this.GetSurplusLoopCommand(parsed);
 
-                try
-                {
-                    analized.AddRange(this.AnalyzeCodeByLine(line));
-                }
-                catch (BFSyntaxException e)
-                {
-                    throw new BFSyntaxException(i, e.Index);
-                }
-                catch
-                {
-                    throw;
-                }
+                throw new BFSyntaxException(surplusLoopCommand.RowPos, surplusLoopCommand.Pos, "Loop commands were not mutch.");
             }
 
-            return analized;
+            return parsed;
         }
     }
 }

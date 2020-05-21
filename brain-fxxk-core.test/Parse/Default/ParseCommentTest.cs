@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using BFCore.Command;
 using BFCore.Config;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace brain_fxxk_core.test.Analyze
+namespace brain_fxxk_core.test.Parse.Default
 {
     [TestClass]
-    public class AnalyzerCommentTest : AnalyzerTestBase
+    public class ParseCommentTest : DefaultParserTestBase
     {
         private static readonly BFCommandConfig _config = new BFCommandConfig();
 
@@ -76,7 +77,7 @@ namespace brain_fxxk_core.test.Analyze
             {
                 AssertEx.DoesNotThrow(() =>
                 {
-                    this._analyzer.Analyze(code);
+                    this._parser.Parse(code);
                 },
                 $@"TestCase: ""{code}""");
             });
@@ -84,24 +85,24 @@ namespace brain_fxxk_core.test.Analyze
 
         public static object[] inLineCommandWithinCommandsTestSource = new object[]
         {
-            new object[] { "#+;", new[] { _config.BeginComment, new BFCommand("+",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#-;", new[] { _config.BeginComment, new BFCommand("-",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#>;", new[] { _config.BeginComment, new BFCommand(">",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#<;", new[] { _config.BeginComment, new BFCommand("<",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#[;", new[] { _config.BeginComment, new BFCommand("[",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#];", new[] { _config.BeginComment, new BFCommand("]",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#,;", new[] { _config.BeginComment, new BFCommand(",",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#.;", new[] { _config.BeginComment, new BFCommand(".",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "##;", new[] { _config.BeginComment, new BFCommand("#",BFCommandType.Trivia), _config.EndComment } },
-            new object[] { "#+", new[] { _config.BeginComment, new BFCommand("+",BFCommandType.Trivia) } },
-            new object[] { "#-", new[] { _config.BeginComment, new BFCommand("-",BFCommandType.Trivia) } },
-            new object[] { "#>", new[] { _config.BeginComment, new BFCommand(">",BFCommandType.Trivia) } },
-            new object[] { "#<", new[] { _config.BeginComment, new BFCommand("<",BFCommandType.Trivia) } },
-            new object[] { "#[", new[] { _config.BeginComment, new BFCommand("[",BFCommandType.Trivia) } },
-            new object[] { "#]", new[] { _config.BeginComment, new BFCommand("]",BFCommandType.Trivia) } },
-            new object[] { "#,", new[] { _config.BeginComment, new BFCommand(",",BFCommandType.Trivia) } },
-            new object[] { "#.", new[] { _config.BeginComment, new BFCommand(".",BFCommandType.Trivia) } },
-            new object[] { "##", new[] { _config.BeginComment, new BFCommand("#",BFCommandType.Trivia) } },
+            new object[] { "#+;", new[] { _config.BeginComment, new BFCommand("+", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#-;", new[] { _config.BeginComment, new BFCommand("-", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#>;", new[] { _config.BeginComment, new BFCommand(">", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#<;", new[] { _config.BeginComment, new BFCommand("<", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#[;", new[] { _config.BeginComment, new BFCommand("[", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#];", new[] { _config.BeginComment, new BFCommand("]", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#,;", new[] { _config.BeginComment, new BFCommand(",", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#.;", new[] { _config.BeginComment, new BFCommand(".", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "##;", new[] { _config.BeginComment, new BFCommand("#", BFCommandType.Trivia, 0, 1), new BFCommand(_config.EndComment, 0, 2) } },
+            new object[] { "#+", new[] { _config.BeginComment, new BFCommand("+", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#-", new[] { _config.BeginComment, new BFCommand("-", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#>", new[] { _config.BeginComment, new BFCommand(">", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#<", new[] { _config.BeginComment, new BFCommand("<", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#[", new[] { _config.BeginComment, new BFCommand("[", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#]", new[] { _config.BeginComment, new BFCommand("]", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#,", new[] { _config.BeginComment, new BFCommand(",", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "#.", new[] { _config.BeginComment, new BFCommand(".", BFCommandType.Trivia, 0, 1) } },
+            new object[] { "##", new[] { _config.BeginComment, new BFCommand("#", BFCommandType.Trivia, 0, 1) } },
         };
 
         [TestMethod]
@@ -110,9 +111,10 @@ namespace brain_fxxk_core.test.Analyze
         {
             this.TestContext.Run<string, IEnumerable<BFCommand>>((code, expected) =>
             {
-                var analized= this._analyzer.Analyze(code);
-                analized.Is(expected, $@"TestCase: ""{code}""");
+                var parsed = this._parser.Parse(code).ToArray();
+                parsed.Is(expected, $@"TestCase: ""{code}""");
             });
         }
+
     }
 }

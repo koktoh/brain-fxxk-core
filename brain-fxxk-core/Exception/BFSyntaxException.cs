@@ -1,6 +1,8 @@
-﻿namespace BFCore.Exception
+﻿using System;
+
+namespace BFCore.Exception
 {
-    public class BFSyntaxException : System.Exception
+    public class BFSyntaxException : BFException
     {
         public int LineNumber { get; } = 0;
         public int Index { get; } = 0;
@@ -15,6 +17,11 @@
             this.Index = index;
         }
 
+        public BFSyntaxException(int lineNumber, int index, string message) : base(BuildErrorMessage(lineNumber, index) + Environment.NewLine + message)
+        {
+            this.LineNumber = lineNumber;
+            this.Index = index;
+        }
 
         public BFSyntaxException(int lineNumber, int index, System.Exception innerException) : base(BuildErrorMessage(lineNumber, index), innerException)
         {

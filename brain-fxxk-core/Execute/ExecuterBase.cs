@@ -20,7 +20,7 @@ namespace BFCore.Execute
         protected ExecuterBase(CommonConfig config, BFCommandConfig commandConfig)
         {
             this._config = config;
-            this._analyzer = new BFAnalyzer(commandConfig);
+            this._analyzer = new BFAnalyzer(config, commandConfig);
         }
 
         private void Init()
@@ -56,16 +56,40 @@ namespace BFCore.Execute
                 switch (command.CommandType)
                 {
                     case BFCommandType.Increment:
-                        this._memory[this._index]++;
+                        try
+                        {
+                            this._memory[this._index]++;
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw new BFRuntimeException(e.Message, e);
+                        }
                         break;
                     case BFCommandType.Decrement:
-                        this._memory[this._index]--;
+                        try
+                        {
+                            this._memory[this._index]--;
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw new BFRuntimeException(e.Message, e);
+                        }
                         break;
                     case BFCommandType.MoveRight:
                         this._index++;
+
+                        if (this._index > this._config.MemorySize)
+                        {
+                            throw new BFRuntimeException("Index was outside the bounds of the array.");
+                        }
                         break;
                     case BFCommandType.MoveLeft:
                         this._index--;
+
+                        if (this._index < 0)
+                        {
+                            throw new BFRuntimeException("Index was outside the bounds of the array.");
+                        }
                         break;
                     case BFCommandType.LoopHead:
                         if (this._memory[this._index] == 0)
@@ -86,10 +110,24 @@ namespace BFCore.Execute
                         }
                         break;
                     case BFCommandType.Read:
-                        this.Read();
+                        try
+                        {
+                            this.Read();
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw new BFRuntimeException(e.Message, e);
+                        }
                         break;
                     case BFCommandType.Write:
-                        this.Write();
+                        try
+                        {
+                            this.Write();
+                        }
+                        catch (System.Exception e)
+                        {
+                            throw new BFRuntimeException(e.Message, e);
+                        }
                         break;
                     default:
                         break;
