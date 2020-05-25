@@ -62,7 +62,7 @@ namespace BFCore.Execute
                         }
                         catch (System.Exception e)
                         {
-                            throw new BFRuntimeException(e.Message, e);
+                            throw new BFRuntimeException(command, e.Message, e);
                         }
                         break;
                     case BFCommandType.Decrement:
@@ -72,7 +72,7 @@ namespace BFCore.Execute
                         }
                         catch (System.Exception e)
                         {
-                            throw new BFRuntimeException(e.Message, e);
+                            throw new BFRuntimeException(command, e.Message, e);
                         }
                         break;
                     case BFCommandType.MoveRight:
@@ -80,7 +80,7 @@ namespace BFCore.Execute
 
                         if (this._index > this._config.MemorySize)
                         {
-                            throw new BFRuntimeException("Index was outside the bounds of the array.");
+                            throw new BFRuntimeException(command, "Index was outside the bounds of the array.");
                         }
                         break;
                     case BFCommandType.MoveLeft:
@@ -88,7 +88,7 @@ namespace BFCore.Execute
 
                         if (this._index < 0)
                         {
-                            throw new BFRuntimeException("Index was outside the bounds of the array.");
+                            throw new BFRuntimeException(command, "Index was outside the bounds of the array.");
                         }
                         break;
                     case BFCommandType.LoopHead:
@@ -96,7 +96,7 @@ namespace BFCore.Execute
                         {
                             if (!this.TryGoToLoopTail(executableCommands, ref i))
                             {
-                                throw new BFSyntaxException("Does not have paired Loop Tail Command");
+                                throw new BFRuntimeException(command, "Does not have paired LoopTail command.");
                             }
                         }
                         break;
@@ -105,7 +105,7 @@ namespace BFCore.Execute
                         {
                             if (!this.TryGoToLoopHead(executableCommands, ref i))
                             {
-                                throw new BFSyntaxException("Does not have paired Loop Head Command");
+                                throw new BFRuntimeException(command, "Does not have paired LoopHead command.");
                             }
                         }
                         break;
@@ -116,7 +116,7 @@ namespace BFCore.Execute
                         }
                         catch (System.Exception e)
                         {
-                            throw new BFRuntimeException(e.Message, e);
+                            throw new BFRuntimeException(command, e.Message, e);
                         }
                         break;
                     case BFCommandType.Write:
@@ -126,7 +126,7 @@ namespace BFCore.Execute
                         }
                         catch (System.Exception e)
                         {
-                            throw new BFRuntimeException(e.Message, e);
+                            throw new BFRuntimeException(command, e.Message, e);
                         }
                         break;
                     default:
